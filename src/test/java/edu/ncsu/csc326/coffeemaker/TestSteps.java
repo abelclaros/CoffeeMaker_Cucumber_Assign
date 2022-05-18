@@ -27,6 +27,7 @@ import cucumber.api.java.en.But;
 import cucumber.api.java.en.*;
 
 import edu.ncsu.csc326.coffeemaker.CoffeeMaker;
+import edu.ncsu.csc326.coffeemaker.UICmd.ChooseRecipe;
 import edu.ncsu.csc326.coffeemaker.UICmd.ChooseService;
 import edu.ncsu.csc326.coffeemaker.UICmd.Command;
 import gherkin.lexer.Th;
@@ -51,7 +52,8 @@ public class TestSteps {
 	private CoffeeMakerUI coffeeMakerMain; 
 	private CoffeeMaker coffeeMaker;
 	private RecipeBook recipeBook;
-
+	private Mode tempMode;
+	private CoffeeMakerUI.Status tempStat;
 	
 	private void initialize() {
 		recipeBook = new RecipeBook();
@@ -67,24 +69,25 @@ public class TestSteps {
 	public void user_picks_an_option(int options) throws Throwable{
 		initialize();
 		//System.out.println("The User picked " + options);
-		coffeeMakerMain.UI_Input(options);
+
+		coffeeMakerMain.UI_Input(new ChooseService(options));
+		tempMode = coffeeMakerMain.getMode();
+		tempStat = coffeeMakerMain.getStatus();
+		//System.out.println(coffeeMakerMain.getMode());
 	}
 
 	@Then("^the coffee maker enters the (.*)$")
-	public void theCoffeeMakerEntersTheMode(Mode modoFunc) throws Throwable {
-		assertEquals(coffeeMakerMain.getMode(),modoFunc);
+	public void theCoffeeMakerEntersTheMode(Mode modeFunc) throws Throwable {
+		//System.out.println(modeFunc);
+		assertEquals(tempMode,modeFunc);
 	}
 
-	@And ("^the user inputs (//d)$")
-	public void the_user_inputs(List<Mode> args) throws Throwable{
-		initialize();
-		System.out.println("the data is:" + args);
-//		ChooseService button = new ChooseService(option);
-//		coffeeMakerMain.UI_Input(button);
-//		assertEquals(coffeeMakerMain.getMode(),Mode.DELETE_RECIPE);
 
-
+	@And("^the (.*) is OK$")
+	public void theStatusIsOK(CoffeeMakerUI.Status modeStat) throws {
+		assertEquals(tempStat,modeStat);
 	}
+
 
     @Given("^an empty recipe book$")
     public void an_empty_recipe_book() throws Throwable {

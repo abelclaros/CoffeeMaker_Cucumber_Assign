@@ -34,17 +34,24 @@ Scenario Outline: Waiting State
 
   Given user picks an <option>
   Then the coffee maker enters the <Mode>
+  And the <status> is OK
   Examples:
-    |option|Mode|
-    |0    |WAITING|
-    |1    |ADD_RECIPE|
-    |2    |DELETE_RECIPE|
-    |3    |EDIT_RECIPE  |
-    |4    |ADD_INVENTORY|
-    |5    |CHECK_INVENTORY|
-    |6    |PURCHASE_BEVERAGE|
+    |option|Mode|status|
+    |0    |WAITING|OK  |
+    |1    |ADD_RECIPE|OK  |
+    |2    |DELETE_RECIPE|OK  |
+    |3    |EDIT_RECIPE  |OK  |
+    |4    |ADD_INVENTORY|OK  |
+    |5    |CHECK_INVENTORY|OK  |
+    |6    |PURCHASE_BEVERAGE|OK  |
+    |7    |WAITING    |OK  |
+    |8    |WAITING     |OK  |
+    |9    |WAITING     |OK  |
+    |10    |WAITING     |OK  |
    # add more here!   
-   
+
+
+
 Scenario: Add a Recipe
       Priority: 1 Story Points: 2
 
